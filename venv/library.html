@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+<head>
+	<link rel="stylesheet" type=text/css href="{{ url_for('static',filename='style.css') }}">
+</head>
+
+<body>
+	<div>
+		{% for game in games %}
+			<button id="gamer">{{ game }}</button>
+		{% endfor %}
+	</div>
+</body>
+
+</html>

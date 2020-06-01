@@ -1,0 +1,6 @@
+
+Please set a custom URL by going to your steam profile page and click “Edit Profile.”
+A few options down on the new page you'll see the “Custom URL” box.
+Here you'll see your Steam ID and have the option to change it to whatever you would like.
+When you're done, scroll to the bottom and click “Save Changes".
+Once you have finished those steps, please relaunch the program and try again!

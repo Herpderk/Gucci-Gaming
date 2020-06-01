@@ -1,0 +1,9 @@
+
+Please set your Steam profile to public. To do so, follow these steps:
+
+1. Open your Steam Client, click [View my profile], then the [Edit Profile] link under your displayed badge.
+2. Click the "My Privacy Settings" tab.
+3. Select the following Settings: My Profile: Public & Game Details: Public.
+4. Click the "Save" button.
+
+Once you have performed these steps, please relaunch the program and try again.
