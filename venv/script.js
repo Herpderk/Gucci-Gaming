@@ -26,7 +26,7 @@ function getName() {
 		request.open("GET", url);
 		request.send();
 
-		document.getElementById("name").placeholder = "Enter the url you were redirected to";
+		document.getElementById("name").placeholder = "Check the terminal";
 		document.getElementById("name").value = "";
 	} 
 	
