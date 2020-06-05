@@ -26,31 +26,26 @@ def getUser():
     spotCode(steamID, spotName)
     return "ight"
 
-#@app.route('/getSpotName', methods=["GET", "POST"])
-#def getSpotName():
-#    if request.method == "GET":
-#        spotName = request.args["spotName"]
-#        spotCode()
-#    return "ight"
-
-#@app.route('/getRedirect', methods=["GET", "POST"])
-#def getRedirect():
-#    redirect = ""
-#    if request.method == "GET":
-#        redirect = request.args["redirect"]
-#    spotCode(steamID, spotName, redirect)
-#    return "ight"
-
 def spotCode(steamID, spotName):
     # initialize the environment
     os.environ["SPOTIPY_CLIENT_ID"] = 'ffb373cfd00543a49c1ce2c357a8e279'
     os.environ["SPOTIPY_CLIENT_SECRET"] = '02800250dd464bcbaa2e03bdaa68c5b9'
     os.environ["SPOTIPY_REDIRECT_URI"] = 'http://google.com/'
 
-
     # This is where the user puts in their Usernames
     steamUsername = steamID
     spotifyUsername = spotName
+
+    scope = 'playlist-modify-public'
+    # Erase cache and prompt for user permission
+    try:
+        token = util.prompt_for_user_token(spotifyUsername, scope)
+    except:
+        os.remove(f".cache-{spotifyUsername}")
+        token = util.prompt_for_user_token(spotifyUsername)
+
+    # Create our spotifyObject
+    spotifyObject = spotipy.Spotify(auth=token)
 
     with urllib.request.urlopen("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=BD4740E2E03714FCCC19FB60BF56BDFB&steamid=" + str(steamUsername) + "&include_appinfo=true&format=json") as url:
         gameData = json.loads(url.read().decode())
@@ -68,17 +63,6 @@ def spotCode(steamID, spotName):
     # Made an error handler to just check if the OST is on spotify or not
     findGame = input("Which game from your Steam library would you like to use? ")
     optionChosen = allGames[int(findGame)].get('name')
-
-    scope = 'playlist-modify-public'
-    # Erase cache and prompt for user permission
-    try:
-        token = util.prompt_for_user_token(spotifyUsername, scope)
-    except:
-        os.remove(f".cache-{spotifyUsername}")
-        token = util.prompt_for_user_token(spotifyUsername)
-
-    # Create our spotifyObject
-    spotifyObject = spotipy.Spotify(auth=token)
 
     spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
     searchOST = str(optionChosen) + " Soundtrack"
@@ -116,8 +100,6 @@ def spotCode(steamID, spotName):
     for i in range(0, 1):
         spotifyObject.user_playlist_add_tracks(user=spotifyUsername, playlist_id=createdPlaylistID, tracks=listOfRecs, position=None)
     print("The playlist should now be generated :D")
-
-
 
 def youtubeCode(chosen):
     api_key = "AIzaSyBDKRAarw5MkceCM1LXpeyVuB_0_9-8JDY"
